@@ -1,12 +1,16 @@
 package adv23s._3_1615.dudt05_dudzich.main;
 
+import adv23s._3_1615.dudt05_dudzich.gui.GUI;
 import adv23s._3_1615.dudt05_dudzich.logic.Game;
 import adv23s._3_1615.dudt05_dudzich.uiText.TextInterface;
 import adv23s._3_1615.dudt05_dudzich.api.IGame;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AdventuraUI extends Application {
@@ -33,9 +37,28 @@ public class AdventuraUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(new Label("Hello World!"));
+        GUI gui = new GUI();
 
-        Scene scene = new Scene(borderPane,300, 300);
+        TextArea textArea = gui.getReadyStartScreen();
+        textArea.setText(game.executeCommand(""));
+        textArea.setEditable(false);
+
+        TextField inputField = new TextField();
+        HBox userInput = gui.getReadyUserInputLabel(inputField);
+        inputField.setOnAction(actionEvent -> {
+            String command = inputField.getText();
+            String gameOutput = game.executeCommand(command);
+            textArea.appendText("\n"+gameOutput);
+
+            inputField.clear();
+        });
+
+        VBox combinedPanel = gui.getCombinedPanel(game);
+        VBox neighborPanel = gui.getNeighboursPanel(game);
+
+        gui.arrangeItemsInBorderPane(userInput, combinedPanel, textArea,
+                neighborPanel, null, borderPane);
+        Scene scene = new Scene(borderPane, 1050, 675);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Adventura");
         primaryStage.show();

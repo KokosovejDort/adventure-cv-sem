@@ -2,15 +2,15 @@ package adv23s._3_1615.dudt05_dudzich.logic;
 
 import adv23s._3_1615.dudt05_dudzich.api.IPlace;
 import adv23s._3_1615.dudt05_dudzich.api.IWorld;
+import adv23s._3_1615.dudt05_dudzich.util.Observable;
+import adv23s._3_1615.dudt05_dudzich.util.Observer;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static adv23s._3_1615.dudt05_dudzich.logic.Scenarios.*;
 
-public class World implements IWorld {
+public class World implements IWorld, Observable {
     /* Jediná instance herního světa. */
     private static final World WORLD = new World();
     private final HashMap
@@ -18,41 +18,42 @@ public class World implements IWorld {
     private final Collection<adv23s._3_1615.dudt05_dudzich.logic.Place> allPlaces;
     private final adv23s._3_1615.dudt05_dudzich.logic.Place startPlace;
     private adv23s._3_1615.dudt05_dudzich.logic.Place currentPlace;
+    private final List<Observer> observers = new CopyOnWriteArrayList<>();
 
     private World() {
         nameToPlace = new LinkedHashMap<>();
 
-        nameToPlace.put("Entrance_of_the_cave", new adv23s._3_1615.dudt05_dudzich.logic.Place(
+        nameToPlace.put("Entrance_of_the_cave", new adv23s._3_1615.dudt05_dudzich.logic.Place(10,50,
                 "Entrance_of_the_cave",
                 "Enterence in the dark cave.",
                 new String[] { "Inside_of_the_cave" },
                 "Blueberries", "Raspberries", "Cones"));
 
-        nameToPlace.put("Inside_of_the_cave", new adv23s._3_1615.dudt05_dudzich.logic.Place(
+        nameToPlace.put("Inside_of_the_cave", new adv23s._3_1615.dudt05_dudzich.logic.Place(20,100,
                 "Inside_of_the_cave",
                 INSIDE,
                 new String[] { "Entrance_of_the_cave", "Chest_room"  },
                 "Rocks_on_the_floor"));
 
-        nameToPlace.put("Chest_room", new adv23s._3_1615.dudt05_dudzich.logic.Place(
+        nameToPlace.put("Chest_room", new adv23s._3_1615.dudt05_dudzich.logic.Place(30,40,
                 "Chest_room",
                 CHEST_ROOM,
                 new String[] {"Inside_of_the_cave", "Jungle"},
                 "Chest"));
 
-        nameToPlace.put("Jungle", new adv23s._3_1615.dudt05_dudzich.logic.Place(
+        nameToPlace.put("Jungle", new adv23s._3_1615.dudt05_dudzich.logic.Place(50,20,
                 "Jungle",
                 JUNGLE,
                 new String[] { "Chest_room", "Riverside" },
                 "Vines", "Trees"));
 
-        nameToPlace.put("Riverside", new adv23s._3_1615.dudt05_dudzich.logic.Place(
+        nameToPlace.put("Riverside", new adv23s._3_1615.dudt05_dudzich.logic.Place(100, 120,
                 "Riverside",
                 RIVERSIDE,
                 new String[] { "Jungle", "River" },
                 "Branches", "Ancient_altar"));
 
-        nameToPlace.put("River", new adv23s._3_1615.dudt05_dudzich.logic.Place(
+        nameToPlace.put("River", new adv23s._3_1615.dudt05_dudzich.logic.Place(420, 10,
                 "River",
                 "River with cold water " +
                         "and fast flow. Watch out!",
@@ -110,6 +111,7 @@ public class World implements IWorld {
     public void setCurrentPlace(IPlace destinationRoom)
     {
         currentPlace = (Place) destinationRoom;
+        notifyObserver();
     }
     /***************************************************************************
      * Inicializuje svět hry, tj. inicializuje propojení prostorů
@@ -122,5 +124,22 @@ public class World implements IWorld {
             place.initialize();
         }
         currentPlace = startPlace;
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unregisterObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObserver() {
+        for (Observer observer: observers) {
+            observer.update();
+        }
     }
 }

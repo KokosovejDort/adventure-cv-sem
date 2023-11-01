@@ -11,13 +11,18 @@ public class Place extends ItemContainer implements IPlace {
     private final List<String> initialNeighborNames;
     private final Map<String, Place> nameToNeighbour;
     private final Collection <Place> exportedNeighbours;
-    public Place(String name, String description,
+    private final Double posTop;
+    private final Double posLeft;
+    public Place(double posTop, double posLeft,
+                 String name, String description,
                  String[] initialNeighborNames,
                  String... initialItemNames) {
 
         super(name, initialItemNames);
         this.initialNeighborNames = List.of(initialNeighborNames);
         this.description = description;
+        this.posLeft = posLeft;
+        this.posTop = posTop;
 
         nameToNeighbour = new HashMap<>();
         exportedNeighbours = Collections.
@@ -66,5 +71,13 @@ public class Place extends ItemContainer implements IPlace {
         for (var name: initialNeighborNames) {
             nameToNeighbour.put(name, (Place)world.place(name));
         }
+    }
+
+    public Double getPosTop() {
+        return posTop;
+    }
+
+    public Double getPosLeft() {
+        return posLeft;
     }
 }

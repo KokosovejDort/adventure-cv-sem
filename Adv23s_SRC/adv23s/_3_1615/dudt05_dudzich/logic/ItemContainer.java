@@ -2,21 +2,21 @@ package adv23s._3_1615.dudt05_dudzich.logic;
 
 import adv23s._3_1615.dudt05_dudzich.api.IItem;
 import adv23s._3_1615.dudt05_dudzich.api.IItemContainer;
+import adv23s._3_1615.dudt05_dudzich.util.Observable;
+import adv23s._3_1615.dudt05_dudzich.util.Observer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-abstract class ItemContainer extends Named implements IItemContainer {
+abstract class ItemContainer extends Named implements IItemContainer, Observable {
     /* Názvy h-objektů obsažených na počátku každé hry. */
-    private final List<String> initialNames;
+    protected final List<String> initialNames;
     /* Názvy aktuálně obsažených h-objektů. */
     private final List<String> itemNames;
     /* Aktuálně obsažené h-objekty. */
     private final List<IItem> items;
     /* Aktuálně obsažené h-objekty. */
     private final List<IItem> itemsView;
+    private final Set<Observer> observers = new HashSet<>();
 
     public ItemContainer(String name, String... initialNames) {
         super(name);
@@ -65,6 +65,7 @@ abstract class ItemContainer extends Named implements IItemContainer {
     {
         items.add(item);
         itemNames.add(item.name().toLowerCase());
+        notifyObserver();
         return true;
     }
     /***************************************************************************
@@ -81,6 +82,7 @@ abstract class ItemContainer extends Named implements IItemContainer {
         if (index < 0) { return false; }
         itemNames.remove(index);
         items.remove(index);
+        notifyObserver();
         return true;
     }
     /***************************************************************************
@@ -96,5 +98,28 @@ abstract class ItemContainer extends Named implements IItemContainer {
             itemNames.add(name.toLowerCase());
             items.add(new Item(name.toLowerCase()));
         }
+        notifyObserver();
     }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void unregisterObserver(Observer observer) {
+        this.observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObserver() {
+        for (Observer observer: observers) {
+            observer.update();
+        }
+    }
+
+    public List<String> getItemNames() {
+        return itemNames;
+    }
+
 }

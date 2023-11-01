@@ -1,9 +1,10 @@
 package adv23s._3_1615.dudt05_dudzich.logic;
 
 import adv23s._3_1615.dudt05_dudzich.api.IBag;
+import adv23s._3_1615.dudt05_dudzich.util.Observable;
+import adv23s._3_1615.dudt05_dudzich.util.Observer;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 public class Bag extends ItemContainer implements IBag {
     /* Jediná instance batohu. */
@@ -29,7 +30,7 @@ public class Bag extends ItemContainer implements IBag {
     {
         return CAPACITY;
     }
-    /* Inicializuje batoh na počátku hry. */
+    /* Initialize batoh na počátku hry. */
     @Override
     public void initialize()
     {
