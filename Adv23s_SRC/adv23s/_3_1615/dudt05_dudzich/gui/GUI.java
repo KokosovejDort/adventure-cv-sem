@@ -2,14 +2,12 @@ package adv23s._3_1615.dudt05_dudzich.gui;
 
 import adv23s._3_1615.dudt05_dudzich.api.IGame;
 import adv23s._3_1615.dudt05_dudzich.logic.World;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Box;
+import javafx.scene.web.*;
 
 public class GUI {
     public TextArea getReadyStartScreen() {
@@ -94,6 +92,9 @@ public class GUI {
         alert.setContentText("Welcome to Adventura, an enthralling text-based adventure game developed as a part of the semester project for the course 4IT115.\n" +
                 "Author: Tsimafei Dudzich\n" +
                 "Version: 1.0");
+
+        WebView webview = new WebView();
+
 
         newGame.setOnAction(actionEvent -> {
             game.stop();
