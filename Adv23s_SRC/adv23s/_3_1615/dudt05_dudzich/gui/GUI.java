@@ -2,6 +2,8 @@ package adv23s._3_1615.dudt05_dudzich.gui;
 
 import adv23s._3_1615.dudt05_dudzich.api.IGame;
 import adv23s._3_1615.dudt05_dudzich.logic.World;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -75,18 +77,35 @@ public class GUI {
         return neighbourPanel.getPannel();
     }
 
-    public MenuBar getMenuBar() {
+    public MenuBar getMenuBar(IGame game) {
         MenuBar menuBar = new MenuBar();
-        Menu game = new Menu("Game");
+        Menu gameMenu = new Menu("Game");
         Menu helpMenu = new Menu("Help");
-        menuBar.getMenus().addAll(game, helpMenu);
+        menuBar.getMenus().addAll(gameMenu, helpMenu);
 
         MenuItem newGame = new MenuItem("New game");
         MenuItem exit = new MenuItem("Exit");
         MenuItem help = new MenuItem("Guidance");
         MenuItem aboutApp = new MenuItem("About app");
 
-        game.getItems().addAll(newGame,new SeparatorMenuItem(),exit);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About app");
+        alert.setHeaderText("Adventura");
+        alert.setContentText("Welcome to Adventura, an enthralling text-based adventure game developed as a part of the semester project for the course 4IT115.\n" +
+                "Author: Tsimafei Dudzich\n" +
+                "Version: 1.0");
+
+        newGame.setOnAction(actionEvent -> {
+            game.stop();
+            game.executeCommand("");
+        });
+        exit.setOnAction(actionEvent -> System.exit(0));
+        aboutApp.setOnAction(actionEvent ->{
+            alert.showAndWait();
+        });
+
+
+        gameMenu.getItems().addAll(newGame,new SeparatorMenuItem(),exit);
         helpMenu.getItems().addAll(help,new SeparatorMenuItem(),aboutApp);
         return menuBar;
     }
@@ -94,7 +113,7 @@ public class GUI {
     public VBox menuAndPanels(IGame game) {
         HBox mapAndPanels = getMapAndPanels(game);
         VBox menuAndPanels = new VBox();
-        menuAndPanels.getChildren().addAll(getMenuBar(), mapAndPanels);
+        menuAndPanels.getChildren().addAll(getMenuBar(game), mapAndPanels);
         return menuAndPanels;
     }
 
