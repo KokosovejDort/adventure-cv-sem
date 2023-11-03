@@ -215,6 +215,18 @@ public class Action extends Named implements IAction {
                     "from this location\n" +
                     "to location:" + destinationName;
         }
+        if (world.currentPlace().name().equalsIgnoreCase("Jungle")) {
+            if(!(boolean)NAME_TO_FLAG.get("vines.cleared")) {
+                return "You need to clear the vines " +
+                        "before you continue your way\n" +
+                        "Use machete";
+            }
+            if(!(boolean)NAME_TO_FLAG.get("bats.killed")) {
+                return "You need to kill the bats " +
+                        "before you continue your way\n" +
+                        "Use machete";
+            }
+        }
         world.setCurrentPlace(destination);
         if (destination.name().equalsIgnoreCase("River")) {
             isAlive = false;
@@ -338,21 +350,26 @@ public class Action extends Named implements IAction {
             World world = World.getInstance();
             if(arguments.length <= 1) {
                 returnStatement = "You need to specify object you want to use";
+                return returnStatement;
             }
             else if(!NAME_TO_TEST.get("argument_usable").test(arguments)) {
                 returnStatement = "The object is not usable:" + arguments[1];
+                return returnStatement;
             }
             else if (!NAME_TO_TEST.get("argument_is_in_bag").test(arguments)) {
                 returnStatement = "You can't use " + arguments[1] + " without the " +
                         "object in your bag:" + arguments[1];
+                return returnStatement;
             }
             else if(!NAME_TO_TEST.get("usable_area").test(new String[]{})) {
                 returnStatement = "You can't use here the object:" + arguments[1];
+                return returnStatement;
             }
             else if (NAME_TO_TEST.get("argument_is_in_bag").test(arguments)) {
                 if (arguments[1].equalsIgnoreCase("flashlight")) {
                     NAME_TO_FLAG.put("flashlight.lit", true);
                     returnStatement = "You light the Flashlight";
+                    return returnStatement;
                 }
                 if(arguments[1].equalsIgnoreCase("lighter")) {
                     if(!(boolean)NAME_TO_FLAG.get("vines.cleared")) {
@@ -363,35 +380,40 @@ public class Action extends Named implements IAction {
                                 "Don't try to scare them off with Lighter";
                         world.currentPlace().addItem(new Item("bats"));
                         world.currentPlace().removeItem(new Item("vines"));
+                        return returnStatement;
                     }
                     else if((boolean)NAME_TO_FLAG.get("vines.cleared")) {
                         returnStatement = "The vines are already cleared";
+                        return returnStatement;
                     }
                 }
-                if(arguments[1].equalsIgnoreCase("machete")) {
-                    if(!(boolean)NAME_TO_FLAG.get("vines.cleared")) {
-                        NAME_TO_FLAG.put("vines.cleared", true);
-                        returnStatement = "You used the object to clear your way:Machete\n" +
-                                "Suddenly a flock of bats swoops down on you.\n"
-                                + "You need to kill them with Machete.\n" +
-                                "Don't try to scare them off with Lighter";
-                        world.currentPlace().addItem(new Item("bats"));
-                        world.currentPlace().removeItem(new Item("vines"));
-                    }
-                    else if((boolean)NAME_TO_FLAG.get("vines.cleared")) {
-                        returnStatement = "The vines are already cleared";
-                    }
+                if (world.currentPlace().name().equalsIgnoreCase("jungle")) {
+                    if (arguments[1].equalsIgnoreCase("machete")) {
+                        if (!(boolean) NAME_TO_FLAG.get("vines.cleared")) {
+                            NAME_TO_FLAG.put("vines.cleared", true);
+                            returnStatement = "You used the object to clear your way:Machete\n" +
+                                    "Suddenly a flock of bats swoops down on you.\n"
+                                    + "You need to kill them with Machete.\n" +
+                                    "Don't try to scare them off with Lighter";
+                            world.currentPlace().addItem(new Item("bats"));
+                            world.currentPlace().removeItem(new Item("vines"));
+                            return returnStatement;
+                        }
 
-                    if(!(boolean) NAME_TO_FLAG.get("bats.killed")) {
-                        returnStatement = "You used object to kill the bats:" +
-                                arguments[1];
-                        world.currentPlace().addItem(new Item("bat_corpses"));
-                        world.currentPlace().removeItem(new Item("bats"));
-                        NAME_TO_FLAG.put("bats.killed", true);
-                    }
-                    else if((boolean) NAME_TO_FLAG.get("bats.killed")) {
-                        returnStatement = "The bats are already killed\n" +
-                                "You can't use the object:Machete";
+                        if ((boolean) NAME_TO_FLAG.get("vines.cleared") &&
+                                !(boolean) NAME_TO_FLAG.get("bats.killed")) {
+                            returnStatement = "You used object to kill the bats:" +
+                                    arguments[1];
+                            world.currentPlace().addItem(new Item("bat_corpses"));
+                            world.currentPlace().removeItem(new Item("bats"));
+                            NAME_TO_FLAG.put("bats.killed", true);
+                            return returnStatement;
+                        } else if ((boolean) NAME_TO_FLAG.get("vines.cleared") &&
+                                (boolean) NAME_TO_FLAG.get("bats.killed")) {
+                            returnStatement = "The bats are already killed\n" +
+                                    "The vines are already cleared";
+                            return returnStatement;
+                        }
                     }
                 }
             }
