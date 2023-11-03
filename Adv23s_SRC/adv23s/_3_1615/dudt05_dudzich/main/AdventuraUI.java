@@ -1,6 +1,7 @@
 package adv23s._3_1615.dudt05_dudzich.main;
 
 import adv23s._3_1615.dudt05_dudzich.gui.GUI;
+import adv23s._3_1615.dudt05_dudzich.gui.GameMap;
 import adv23s._3_1615.dudt05_dudzich.logic.Game;
 import adv23s._3_1615.dudt05_dudzich.uiText.TextInterface;
 import adv23s._3_1615.dudt05_dudzich.api.IGame;
@@ -43,6 +44,8 @@ public class AdventuraUI extends Application {
         textArea.setText(game.executeCommand(""));
         textArea.setEditable(false);
 
+        HBox mapAndPanels = gui.getMapAndPanels(game);
+
         TextField inputField = new TextField();
         HBox userInput = gui.getReadyUserInputLabel(inputField);
         inputField.setOnAction(actionEvent -> {
@@ -53,11 +56,8 @@ public class AdventuraUI extends Application {
             inputField.clear();
         });
 
-        VBox combinedPanel = gui.getCombinedPanel(game);
-        VBox neighborPanel = gui.getNeighboursPanel(game);
-
-        gui.arrangeItemsInBorderPane(userInput, combinedPanel, textArea,
-                neighborPanel, null, borderPane);
+        gui.arrangeItemsInBorderPane(userInput ,null, textArea,
+                null, mapAndPanels, borderPane);
         Scene scene = new Scene(borderPane, 1050, 675);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Adventura");

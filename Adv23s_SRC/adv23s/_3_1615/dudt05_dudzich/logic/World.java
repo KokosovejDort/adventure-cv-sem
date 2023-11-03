@@ -23,37 +23,37 @@ public class World implements IWorld, Observable {
     private World() {
         nameToPlace = new LinkedHashMap<>();
 
-        nameToPlace.put("Entrance_of_the_cave", new adv23s._3_1615.dudt05_dudzich.logic.Place(10,50,
+        nameToPlace.put("Entrance_of_the_cave", new adv23s._3_1615.dudt05_dudzich.logic.Place(70,80,
                 "Entrance_of_the_cave",
                 "Enterence in the dark cave.",
                 new String[] { "Inside_of_the_cave" },
                 "Blueberries", "Raspberries", "Cones"));
 
-        nameToPlace.put("Inside_of_the_cave", new adv23s._3_1615.dudt05_dudzich.logic.Place(20,100,
+        nameToPlace.put("Inside_of_the_cave", new adv23s._3_1615.dudt05_dudzich.logic.Place(115,185,
                 "Inside_of_the_cave",
                 INSIDE,
                 new String[] { "Entrance_of_the_cave", "Chest_room"  },
                 "Rocks_on_the_floor"));
 
-        nameToPlace.put("Chest_room", new adv23s._3_1615.dudt05_dudzich.logic.Place(30,40,
+        nameToPlace.put("Chest_room", new adv23s._3_1615.dudt05_dudzich.logic.Place(205,330,
                 "Chest_room",
                 CHEST_ROOM,
                 new String[] {"Inside_of_the_cave", "Jungle"},
                 "Chest"));
 
-        nameToPlace.put("Jungle", new adv23s._3_1615.dudt05_dudzich.logic.Place(50,20,
+        nameToPlace.put("Jungle", new adv23s._3_1615.dudt05_dudzich.logic.Place(315,310,
                 "Jungle",
                 JUNGLE,
                 new String[] { "Chest_room", "Riverside" },
                 "Vines", "Trees"));
 
-        nameToPlace.put("Riverside", new adv23s._3_1615.dudt05_dudzich.logic.Place(100, 120,
+        nameToPlace.put("Riverside", new adv23s._3_1615.dudt05_dudzich.logic.Place(350, 220,
                 "Riverside",
                 RIVERSIDE,
                 new String[] { "Jungle", "River" },
                 "Branches", "Ancient_altar"));
 
-        nameToPlace.put("River", new adv23s._3_1615.dudt05_dudzich.logic.Place(420, 10,
+        nameToPlace.put("River", new adv23s._3_1615.dudt05_dudzich.logic.Place(315, 100,
                 "River",
                 "River with cold water " +
                         "and fast flow. Watch out!",

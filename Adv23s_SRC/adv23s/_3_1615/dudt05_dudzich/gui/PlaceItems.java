@@ -22,7 +22,7 @@ public class PlaceItems implements Observer {
     }
 
     private void init() {
-        vbox.setPrefWidth(100);
+        vbox.setPrefWidth(145);
         Label label = new Label("Loot:");
         itemPanel.setSpacing(2);
         vbox.getChildren().addAll(label, itemPanel);

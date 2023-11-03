@@ -8,9 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class GUI {
     public TextArea getReadyStartScreen() {
@@ -52,6 +50,25 @@ public class GUI {
 
         combinedPanel.setPrefWidth(150);
         return combinedPanel;
+    }
+
+    public HBox getMapAndPanels(IGame game) {
+        GameMap gameMap = new GameMap();
+        HBox mapAndPanels = new HBox();
+
+        Region leftSpacer = new Region();
+        Region rightSpacer = new Region();
+
+        HBox.setHgrow(leftSpacer, Priority.ALWAYS);
+        HBox.setHgrow(rightSpacer, Priority.ALWAYS);
+
+        mapAndPanels.getChildren().addAll(getCombinedPanel(game),
+                leftSpacer,
+                gameMap.getAnchorPane(),
+                rightSpacer,
+                getNeighboursPanel(game));
+
+        return mapAndPanels;
     }
 
     public VBox getNeighboursPanel(IGame game) {

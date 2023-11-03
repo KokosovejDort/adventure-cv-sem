@@ -22,9 +22,9 @@ public class GameMap implements Observer {
     }
 
     public GameMap() {
-        Image image = new Image(Objects.requireNonNull(GameMap.class.getResourceAsStream(
-                "Adv23s_SRC/resources/gameMap.jpeg"
-        )));
+        Image image = new Image(Objects.requireNonNull(GameMap.class.getClassLoader()
+                .getResourceAsStream("gameMap.png")),
+                400, 400, false, false);
         imageView = new ImageView(image);
         world.registerObserver(this);
         setPlayerPosition();
