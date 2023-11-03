@@ -44,7 +44,7 @@ public class AdventuraUI extends Application {
         textArea.setText(game.executeCommand(""));
         textArea.setEditable(false);
 
-        HBox mapAndPanels = gui.getMapAndPanels(game);
+        VBox menuAndPanels = gui.menuAndPanels(game);
 
         TextField inputField = new TextField();
         HBox userInput = gui.getReadyUserInputLabel(inputField);
@@ -57,7 +57,7 @@ public class AdventuraUI extends Application {
         });
 
         gui.arrangeItemsInBorderPane(userInput ,null, textArea,
-                null, mapAndPanels, borderPane);
+                null, menuAndPanels, borderPane);
         Scene scene = new Scene(borderPane, 1050, 675);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Adventura");

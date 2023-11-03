@@ -5,10 +5,9 @@ import adv23s._3_1615.dudt05_dudzich.logic.World;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Box;
 
 public class GUI {
     public TextArea getReadyStartScreen() {
@@ -74,6 +73,29 @@ public class GUI {
     public VBox getNeighboursPanel(IGame game) {
         NeighbourPanel neighbourPanel = new NeighbourPanel();
         return neighbourPanel.getPannel();
+    }
+
+    public MenuBar getMenuBar() {
+        MenuBar menuBar = new MenuBar();
+        Menu game = new Menu("Game");
+        Menu helpMenu = new Menu("Help");
+        menuBar.getMenus().addAll(game, helpMenu);
+
+        MenuItem newGame = new MenuItem("New game");
+        MenuItem exit = new MenuItem("Exit");
+        MenuItem help = new MenuItem("Guidance");
+        MenuItem aboutApp = new MenuItem("About app");
+
+        game.getItems().addAll(newGame,new SeparatorMenuItem(),exit);
+        helpMenu.getItems().addAll(help,new SeparatorMenuItem(),aboutApp);
+        return menuBar;
+    }
+
+    public VBox menuAndPanels(IGame game) {
+        HBox mapAndPanels = getMapAndPanels(game);
+        VBox menuAndPanels = new VBox();
+        menuAndPanels.getChildren().addAll(getMenuBar(), mapAndPanels);
+        return menuAndPanels;
     }
 
     public void arrangeItemsInBorderPane(Node bottom, Node left,
