@@ -64,3 +64,9 @@ public class AdventuraUI extends Application {
         primaryStage.show();
     }
 }
+
+//TODO:Klavesove zkratky
+//TODO:New Game on click
+//TODO:About the app
+//TODO:Javadoc comments
+

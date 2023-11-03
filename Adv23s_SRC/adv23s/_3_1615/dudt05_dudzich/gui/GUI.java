@@ -5,9 +5,11 @@ import adv23s._3_1615.dudt05_dudzich.logic.World;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.web.*;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 public class GUI {
     public TextArea getReadyStartScreen() {
@@ -93,14 +95,21 @@ public class GUI {
                 "Author: Tsimafei Dudzich\n" +
                 "Version: 1.0");
 
-        WebView webview = new WebView();
-
-
         newGame.setOnAction(actionEvent -> {
             game.stop();
             game.executeCommand("");
         });
         exit.setOnAction(actionEvent -> System.exit(0));
+        help.setOnAction(actionEvent -> {
+            Stage stage = new Stage();
+            WebView webview = new WebView();
+            webview.getEngine().load(
+                    getClass().getResource("/" + game.world().currentPlace().name()+".html").toExternalForm()
+            );
+            stage.setScene(new Scene(webview, 235, 150));
+            stage.setTitle(game.world().currentPlace().name().replace("_", " "));
+            stage.show();
+        });
         aboutApp.setOnAction(actionEvent ->{
             alert.showAndWait();
         });
