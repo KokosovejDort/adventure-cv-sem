@@ -6,6 +6,7 @@ import adv23s._3_1615.dudt05_dudzich.logic.Game;
 import adv23s._3_1615.dudt05_dudzich.util.Observer;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -17,8 +18,10 @@ public class BagPannel implements Observer {
     private final VBox itemPanel = new VBox();
     private final Bag bag;
     private final IGame game = Game.getInstance();
+    private final TextArea textArea;
 
-    public BagPannel(IGame game) {
+    public BagPannel(IGame game, TextArea textArea) {
+        this.textArea = textArea;
         bag = (Bag) game.bag();
         init();
         bag.registerObserver(this);
@@ -38,7 +41,8 @@ public class BagPannel implements Observer {
         for (String item: items) {
             Label label = new Label(item);
             label.setOnMouseClicked(event -> {
-                game.executeCommand("put " + label.getText());
+                String gameOutput = game.executeCommand("put " + label.getText());
+                textArea.appendText("\n"+gameOutput);
             });
             itemPanel.getChildren().add(label);
         }

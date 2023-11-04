@@ -13,11 +13,14 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 public class GUI {
+    private TextArea textArea;
     public TextArea getReadyStartScreen() {
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
+        this.textArea = textArea;
         return textArea;
     }
 
@@ -32,12 +35,12 @@ public class GUI {
     }
 
     public VBox getBagPanel(IGame game) {
-        BagPannel bagPannel = new BagPannel(game);
+        BagPannel bagPannel = new BagPannel(game, textArea);
         return bagPannel.getPannel();
     }
 
     public VBox getItemsPanel(IGame game) {
-        PlaceItems placeItems = new PlaceItems((World) game.world());
+        PlaceItems placeItems = new PlaceItems((World) game.world(), textArea);
         return placeItems.getPannel();
     }
 
@@ -76,7 +79,7 @@ public class GUI {
     }
 
     public VBox getNeighboursPanel(IGame game) {
-        NeighbourPanel neighbourPanel = new NeighbourPanel();
+        NeighbourPanel neighbourPanel = new NeighbourPanel(textArea);
         return neighbourPanel.getPannel();
     }
 

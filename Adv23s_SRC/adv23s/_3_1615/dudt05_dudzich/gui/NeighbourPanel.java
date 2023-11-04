@@ -7,6 +7,7 @@ import adv23s._3_1615.dudt05_dudzich.logic.World;
 import adv23s._3_1615.dudt05_dudzich.util.Observer;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
 public class NeighbourPanel implements Observer {
@@ -14,9 +15,11 @@ public class NeighbourPanel implements Observer {
     private final VBox vbox = new VBox();
     private World world = World.getInstance();
     private final IGame game = Game.getInstance();
+    private final TextArea textArea;
     private Place currentPlace;
 
-    public NeighbourPanel() {
+    public NeighbourPanel(TextArea textArea) {
+        this.textArea = textArea;
         currentPlace = world.currentPlace();
         init();
         world.registerObserver(this);
@@ -38,7 +41,8 @@ public class NeighbourPanel implements Observer {
         for (Place place: currentPlace.neighbors()) {
             Label label = new Label(place.name());
             label.setOnMouseClicked(event -> {
-                game.executeCommand("go " + label.getText());
+                String gameOutput = game.executeCommand("go " + label.getText());
+                textArea.appendText("\n"+gameOutput);
             });
             neighbourPanel.getChildren().add(label);
         }
