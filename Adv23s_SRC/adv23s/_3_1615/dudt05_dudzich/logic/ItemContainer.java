@@ -122,4 +122,8 @@ abstract class ItemContainer extends Named implements IItemContainer, Observable
         return itemNames;
     }
 
+    protected void clearObservers() {
+        observers.clear();
+    }
+
 }

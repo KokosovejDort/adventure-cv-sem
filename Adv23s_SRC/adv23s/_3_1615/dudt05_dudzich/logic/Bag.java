@@ -36,5 +36,6 @@ public class Bag extends ItemContainer implements IBag {
     {
         super.initializeItems();
         remains = CAPACITY;
+        this.clearObservers();
     }
 }

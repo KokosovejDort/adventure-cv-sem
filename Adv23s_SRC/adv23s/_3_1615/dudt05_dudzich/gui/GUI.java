@@ -2,6 +2,7 @@ package adv23s._3_1615.dudt05_dudzich.gui;
 
 import adv23s._3_1615.dudt05_dudzich.api.IGame;
 import adv23s._3_1615.dudt05_dudzich.logic.World;
+import adv23s._3_1615.dudt05_dudzich.main.AdventuraUI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -17,6 +18,11 @@ import org.w3c.dom.Text;
 
 public class GUI {
     private TextArea textArea;
+    private AdventuraUI mainApp;
+
+    public GUI(AdventuraUI mainApp) {
+        this.mainApp = mainApp;
+    }
     public TextArea getReadyStartScreen() {
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
@@ -103,7 +109,7 @@ public class GUI {
 
         newGame.setOnAction(actionEvent -> {
             game.stop();
-            game.executeCommand("");
+            mainApp.resetGui();
         });
         newGame.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
 
@@ -148,5 +154,13 @@ public class GUI {
         borderPane.setCenter(center != null ? center : borderPane.getCenter());
         borderPane.setRight(right != null ? right : borderPane.getRight());
         borderPane.setTop(top != null ? top : borderPane.getTop());
+    }
+
+    public void clearBorderPane(BorderPane borderPane) {
+        borderPane.setTop(null);
+        borderPane.setBottom(null);
+        borderPane.setCenter(null);
+        borderPane.setLeft(null);
+        borderPane.setRight(null);
     }
 }

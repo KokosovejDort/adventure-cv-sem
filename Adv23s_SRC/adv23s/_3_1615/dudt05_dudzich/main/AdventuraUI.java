@@ -1,10 +1,9 @@
 package adv23s._3_1615.dudt05_dudzich.main;
 
+import adv23s._3_1615.dudt05_dudzich.api.IGame;
 import adv23s._3_1615.dudt05_dudzich.gui.GUI;
-import adv23s._3_1615.dudt05_dudzich.gui.GameMap;
 import adv23s._3_1615.dudt05_dudzich.logic.Game;
 import adv23s._3_1615.dudt05_dudzich.uiText.TextInterface;
-import adv23s._3_1615.dudt05_dudzich.api.IGame;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -16,6 +15,8 @@ import javafx.stage.Stage;
 
 public class AdventuraUI extends Application {
     private static final IGame game = Game.getInstance();
+    private BorderPane borderPane;
+    private Stage primaryStage;
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -37,8 +38,17 @@ public class AdventuraUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        BorderPane borderPane = new BorderPane();
-        GUI gui = new GUI();
+        this.borderPane = new BorderPane();
+        this.primaryStage = primaryStage;
+        resetGui();
+        Scene scene = new Scene(borderPane, 1050, 675);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Adventura");
+        primaryStage.show();
+    }
+    public void resetGui() {
+        GUI gui = new GUI(this);
+        gui.clearBorderPane(borderPane);
 
         TextArea textArea = gui.getReadyStartScreen();
         textArea.setText(game.executeCommand(""));
@@ -51,22 +61,13 @@ public class AdventuraUI extends Application {
         inputField.setOnAction(actionEvent -> {
             String command = inputField.getText();
             String gameOutput = game.executeCommand(command);
-            textArea.appendText("\n"+gameOutput);
-
+            textArea.appendText("\n" + gameOutput);
             inputField.clear();
         });
 
-        gui.arrangeItemsInBorderPane(userInput ,null, textArea,
-                null, menuAndPanels, borderPane);
-        Scene scene = new Scene(borderPane, 1050, 675);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Adventura");
-        primaryStage.show();
+        gui.arrangeItemsInBorderPane(userInput, null, textArea, null, menuAndPanels, borderPane);
     }
 }
 
-//TODO:Klavesove zkratky
-//TODO:New Game on click
-//TODO:About the app
 //TODO:Javadoc comments
 

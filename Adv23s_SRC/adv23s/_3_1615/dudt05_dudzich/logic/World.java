@@ -120,10 +120,14 @@ public class World implements IWorld, Observable {
     @Override
     public void initialize()
     {
+        if (currentPlace != null) {
+            currentPlace.clearObservers();
+        }
         for (IPlace place: nameToPlace.values()) {
             place.initialize();
         }
         currentPlace = startPlace;
+        observers.clear();
     }
 
     @Override

@@ -4,14 +4,11 @@ import adv23s._3_1615.dudt05_dudzich.api.IGame;
 import adv23s._3_1615.dudt05_dudzich.logic.Bag;
 import adv23s._3_1615.dudt05_dudzich.logic.Game;
 import adv23s._3_1615.dudt05_dudzich.util.Observer;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
-import java.util.Set;
 
 public class BagPannel implements Observer {
     private final VBox vbox = new VBox();
