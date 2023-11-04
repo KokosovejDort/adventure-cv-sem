@@ -7,6 +7,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -99,7 +102,11 @@ public class GUI {
             game.stop();
             game.executeCommand("");
         });
+        newGame.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
+
         exit.setOnAction(actionEvent -> System.exit(0));
+        exit.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
+
         help.setOnAction(actionEvent -> {
             Stage stage = new Stage();
             WebView webview = new WebView();
@@ -110,9 +117,12 @@ public class GUI {
             stage.setTitle(game.world().currentPlace().name().replace("_", " "));
             stage.show();
         });
+        help.setAccelerator(new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN));
+
         aboutApp.setOnAction(actionEvent ->{
             alert.showAndWait();
         });
+        aboutApp.setAccelerator(new KeyCodeCombination(KeyCode.I, KeyCombination.CONTROL_DOWN));
 
 
         gameMenu.getItems().addAll(newGame,new SeparatorMenuItem(),exit);
