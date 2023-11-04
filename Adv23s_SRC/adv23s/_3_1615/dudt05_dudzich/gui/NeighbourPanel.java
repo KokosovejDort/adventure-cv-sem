@@ -1,5 +1,7 @@
 package adv23s._3_1615.dudt05_dudzich.gui;
 
+import adv23s._3_1615.dudt05_dudzich.api.IGame;
+import adv23s._3_1615.dudt05_dudzich.logic.Game;
 import adv23s._3_1615.dudt05_dudzich.logic.Place;
 import adv23s._3_1615.dudt05_dudzich.logic.World;
 import adv23s._3_1615.dudt05_dudzich.util.Observer;
@@ -11,6 +13,7 @@ public class NeighbourPanel implements Observer {
     private final VBox neighbourPanel = new VBox();
     private final VBox vbox = new VBox();
     private World world = World.getInstance();
+    private final IGame game = Game.getInstance();
     private Place currentPlace;
 
     public NeighbourPanel() {
@@ -34,6 +37,9 @@ public class NeighbourPanel implements Observer {
         neighbourPanel.getChildren().clear();
         for (Place place: currentPlace.neighbors()) {
             Label label = new Label(place.name());
+            label.setOnMouseClicked(event -> {
+                game.executeCommand("go " + label.getText());
+            });
             neighbourPanel.getChildren().add(label);
         }
     }

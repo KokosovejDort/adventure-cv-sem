@@ -1,5 +1,7 @@
 package adv23s._3_1615.dudt05_dudzich.gui;
 
+import adv23s._3_1615.dudt05_dudzich.api.IGame;
+import adv23s._3_1615.dudt05_dudzich.logic.Game;
 import adv23s._3_1615.dudt05_dudzich.logic.Place;
 import adv23s._3_1615.dudt05_dudzich.logic.World;
 import adv23s._3_1615.dudt05_dudzich.util.Observer;
@@ -12,6 +14,7 @@ public class PlaceItems implements Observer {
     private final VBox vbox = new VBox();
     private final VBox itemPanel = new VBox();
     private final World world = World.getInstance();
+    private final IGame game = Game.getInstance();
     private Place currentPlace;
 
     public PlaceItems(World world) {
@@ -34,6 +37,9 @@ public class PlaceItems implements Observer {
         List<String> items = currentPlace.getItemNames();
         for (String item: items) {
             Label label = new Label(item);
+            label.setOnMouseClicked(event -> {
+                game.executeCommand("take " + label.getText());
+            });
             itemPanel.getChildren().add(label);
         }
     }
