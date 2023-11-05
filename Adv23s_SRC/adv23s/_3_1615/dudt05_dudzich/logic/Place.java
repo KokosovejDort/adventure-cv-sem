@@ -1,6 +1,7 @@
 package adv23s._3_1615.dudt05_dudzich.logic;
 
 import adv23s._3_1615.dudt05_dudzich.api.IPlace;
+import adv23s._3_1615.dudt05_dudzich.api.TypeOfStep;
 
 import java.util.*;
 

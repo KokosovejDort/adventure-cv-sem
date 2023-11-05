@@ -10,6 +10,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
+/**
+ * The {@code NeighbourPanel} class represents a UI component that displays the neighboring places of the current location in the game.
+ * It updates dynamically as the player moves through the world.
+ */
 public class NeighbourPanel implements Observer {
     private final VBox neighbourPanel = new VBox();
     private final VBox vbox = new VBox();
@@ -18,6 +22,11 @@ public class NeighbourPanel implements Observer {
     private final TextArea textArea;
     private Place currentPlace;
 
+    /**
+     * Constructs a {@code NeighbourPanel} with a reference to a {@code TextArea} for game output.
+     *
+     * @param textArea The {@code TextArea} where game output is displayed.
+     */
     public NeighbourPanel(TextArea textArea) {
         this.textArea = textArea;
         currentPlace = world.currentPlace();
@@ -25,6 +34,9 @@ public class NeighbourPanel implements Observer {
         world.registerObserver(this);
     }
 
+    /**
+     * Initializes the panel with the current neighbors of the player's location.
+     */
     private void init() {
         getCurrentNeighbours();
         vbox.setPrefWidth(145);
@@ -36,6 +48,10 @@ public class NeighbourPanel implements Observer {
         getCurrentNeighbours();
     }
 
+    /**
+     * Updates the panel to display the current neighbors of the player's location.
+     * Each neighbor is represented by a clickable label that, when clicked, executes the "go" command to move to that location.
+     */
     private void getCurrentNeighbours() {
         neighbourPanel.getChildren().clear();
         for (Place place: currentPlace.neighbors()) {
@@ -48,12 +64,20 @@ public class NeighbourPanel implements Observer {
         }
     }
 
+    /**
+     * Called when the observed object is changed. It updates the current place and refreshes the neighbors displayed.
+     */
     @Override
     public void update() {
         currentPlace = world.currentPlace();
         getCurrentNeighbours();
     }
 
+    /**
+     * Retrieves the panel containing the neighbor labels.
+     *
+     * @return A {@code VBox} containing the neighbor labels.
+     */
     public VBox getPannel() {
         return vbox;
     }

@@ -1,10 +1,9 @@
 package adv23s._3_1615.dudt05_dudzich.logic;
 
 import adv23s._3_1615.dudt05_dudzich.api.IBag;
-import adv23s._3_1615.dudt05_dudzich.util.Observable;
-import adv23s._3_1615.dudt05_dudzich.util.Observer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Bag extends ItemContainer implements IBag {
     /* Jediná instance batohu. */

@@ -2,8 +2,6 @@ package adv23s._3_1615.dudt05_dudzich.logic;
 
 import adv23s._3_1615.dudt05_dudzich.api.IAction;
 import adv23s._3_1615.dudt05_dudzich.api.INamed;
-import adv23s._3_1615.dudt05_dudzich.util.Observable;
-import adv23s._3_1615.dudt05_dudzich.util.Observer;
 
 import java.util.*;
 import java.util.function.Function;
